@@ -12,7 +12,7 @@ class HardwareManager:
         self.bpm_buffer = deque([70] * 10, maxlen=10)
         self.ecg_history = deque([0] * 500, maxlen=500)
         self.ecg_status = "🔴 In attesa..."
-        self.rr_intervals = deque([0.8] * 10, maxlen=10)
+        self.rr_intervals = deque(maxlen=10)
 
         # Dati IMU
         self.activity_level = 0

@@ -230,12 +230,13 @@ def ecg_worker(port, manager):
                                 intervallo_sec = ora - ultimo_battito
                                 bpm_instant = 60 / max(0.01, ora - ultimo_battito)
                                 bpm_constrained = max(40, min(200, int(bpm_instant)))
-                                with manager.data_lock:
-                                    manager.bpm_buffer.append(bpm_constrained)
-                                    manager.bpm_display = int(
-                                        sum(manager.bpm_buffer) / len(manager.bpm_buffer)
-                                    )
-                                    manager.rr_intervals.append(intervallo_sec)
+                                if 0.3 < intervallo_sec < 2.0:
+                                    with manager.data_lock:
+                                        manager.bpm_buffer.append(bpm_constrained)
+                                        manager.bpm_display = int(
+                                            sum(manager.bpm_buffer) / len(manager.bpm_buffer)
+                                        )
+                                        manager.rr_intervals.append(intervallo_sec)
                                 ultimo_battito = ora
 
                             with manager.data_lock:

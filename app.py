@@ -139,8 +139,11 @@ def main():
         st.metric("Attività Motoria", activity_current, imu_status)
 
     cg1, cg2 = st.columns(2)
+    ADC_TO_MV = (2.42 / 4) / (2**23) * 1000  # ≈ 0.0000721 mV/LSB
+
+    ecg_data_mv = [v * ADC_TO_MV for v in ecg_data]
     with cg1:
-        st.line_chart(ecg_data, height=300)
+        st.line_chart(ecg_data_mv, height=300)
     with cg2:
         st.area_chart(imu_data, height=300)
 
